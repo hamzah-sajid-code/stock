@@ -1,0 +1,5 @@
+{
+  "name": "TradeView Pro",
+  "description": "A realtime stock-market visualization application mimicking Yahoo Finance capabilities with multi-stock monitoring, advanced charting, and technical indicators.",
+  "requestFramePermissions": []
+}
