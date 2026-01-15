@@ -62,60 +62,72 @@ function App() {
       <DataSourceModal isOpen={showDocs} onClose={() => setShowDocs(false)} />
       
       {/* Navbar */}
-      <header className="bg-white dark:bg-dark-panel border-b border-gray-200 dark:border-gray-800 px-4 py-3 flex items-center justify-between sticky top-0 z-40 shadow-sm">
-        <div className="flex items-center space-x-4">
-            <h1 className="text-xl font-bold tracking-tight text-yahoo-purple dark:text-purple-400">
-                TradeView<span className="text-gray-600 dark:text-gray-300 font-light">Pro</span>
-            </h1>
-            
-            {/* Quick Layout Controls */}
-            <div className="hidden md:flex items-center space-x-1 bg-gray-100 dark:bg-gray-800 p-1 rounded-md">
-                <button onClick={() => changeColumns(1)} className={clsx("p-1.5 rounded", layout.columns === 1 ? "bg-white dark:bg-gray-700 shadow" : "text-gray-500 hover:text-gray-700")}>
-                    <Monitor size={16} />
-                </button>
-                <button onClick={() => changeColumns(2)} className={clsx("p-1.5 rounded", layout.columns === 2 ? "bg-white dark:bg-gray-700 shadow" : "text-gray-500 hover:text-gray-700")}>
-                    <LayoutGrid size={16} />
-                </button>
-                <button onClick={() => changeColumns(3)} className={clsx("p-1.5 rounded", layout.columns === 3 ? "bg-white dark:bg-gray-700 shadow" : "text-gray-500 hover:text-gray-700")}>
-                    <Grid size={16} />
-                </button>
-                <button onClick={() => changeColumns(4)} className={clsx("p-1.5 rounded", layout.columns === 4 ? "bg-white dark:bg-gray-700 shadow" : "text-gray-500 hover:text-gray-700")}>
-                    <span className="text-xs font-bold px-1">4</span>
+      <header className="bg-white dark:bg-dark-panel border-b border-gray-200 dark:border-gray-800 px-3 py-3 md:px-4 md:py-3 flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0 sticky top-0 z-40 shadow-sm">
+        
+        <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+                <h1 className="text-xl font-bold tracking-tight text-yahoo-purple dark:text-purple-400">
+                    TradeView<span className="text-gray-600 dark:text-gray-300 font-light">Pro</span>
+                </h1>
+                
+                {/* Quick Layout Controls - Desktop Only */}
+                <div className="hidden md:flex items-center space-x-1 bg-gray-100 dark:bg-gray-800 p-1 rounded-md">
+                    <button onClick={() => changeColumns(1)} className={clsx("p-1.5 rounded", layout.columns === 1 ? "bg-white dark:bg-gray-700 shadow" : "text-gray-500 hover:text-gray-700")}>
+                        <Monitor size={16} />
+                    </button>
+                    <button onClick={() => changeColumns(2)} className={clsx("p-1.5 rounded", layout.columns === 2 ? "bg-white dark:bg-gray-700 shadow" : "text-gray-500 hover:text-gray-700")}>
+                        <LayoutGrid size={16} />
+                    </button>
+                    <button onClick={() => changeColumns(3)} className={clsx("p-1.5 rounded", layout.columns === 3 ? "bg-white dark:bg-gray-700 shadow" : "text-gray-500 hover:text-gray-700")}>
+                        <Grid size={16} />
+                    </button>
+                    <button onClick={() => changeColumns(4)} className={clsx("p-1.5 rounded", layout.columns === 4 ? "bg-white dark:bg-gray-700 shadow" : "text-gray-500 hover:text-gray-700")}>
+                        <span className="text-xs font-bold px-1">4</span>
+                    </button>
+                </div>
+
+                <button 
+                onClick={toggleDense}
+                className={clsx("hidden md:block text-xs font-medium px-3 py-1.5 rounded-full border", layout.dense ? "bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:border-blue-800 dark:text-blue-300" : "border-gray-300 dark:border-gray-600")}
+                >
+                    {layout.dense ? 'Dense View' : 'Normal View'}
                 </button>
             </div>
 
-            <button 
-               onClick={toggleDense}
-               className={clsx("text-xs font-medium px-3 py-1.5 rounded-full border", layout.dense ? "bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:border-blue-800 dark:text-blue-300" : "border-gray-300 dark:border-gray-600")}
-            >
-                {layout.dense ? 'Dense View' : 'Normal View'}
-            </button>
+            {/* Mobile: Dark Mode Toggle */}
+            <div className="md:hidden">
+                <button onClick={() => setDarkMode(!darkMode)} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500">
+                    {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+                </button>
+            </div>
         </div>
 
-        <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2">
+        <div className="flex items-center justify-between md:justify-end space-x-2 md:space-x-4">
+            <div className="flex items-center space-x-2 w-full md:w-auto">
                 <input 
                    type="text"
                    value={addTicker}
                    onChange={(e) => setAddTicker(e.target.value.toUpperCase())}
                    onKeyDown={(e) => { if (e.key === 'Enter') addPanel(); }}
                    placeholder="SYMBOL"
-                   className="bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 w-24 uppercase font-bold text-center placeholder-gray-400"
+                   className="flex-1 md:flex-none bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 w-full md:w-24 uppercase font-bold text-center placeholder-gray-400"
                 />
                 <button 
                   onClick={addPanel}
-                  className="flex items-center space-x-1 bg-yahoo-purple hover:bg-purple-700 text-white px-3 py-1.5 rounded text-sm font-medium transition-colors shadow-sm"
+                  className="flex items-center space-x-1 bg-yahoo-purple hover:bg-purple-700 text-white px-3 py-1.5 rounded text-sm font-medium transition-colors shadow-sm whitespace-nowrap"
                 >
                     <Plus size={16} />
-                    <span className="hidden sm:inline">Add</span>
+                    <span className="inline">Add</span>
                 </button>
             </div>
 
-            <div className="h-6 w-px bg-gray-300 dark:bg-gray-700 mx-2" />
+            <div className="hidden md:block h-6 w-px bg-gray-300 dark:bg-gray-700 mx-2" />
             
-            <TimezoneSelector currentTimezone={timezone} onChange={setTimezone} />
+            <div className="shrink-0">
+                 <TimezoneSelector currentTimezone={timezone} onChange={setTimezone} />
+            </div>
             
-            <button onClick={() => setDarkMode(!darkMode)} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500">
+            <button onClick={() => setDarkMode(!darkMode)} className="hidden md:block p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500">
                 {darkMode ? <Sun size={20} /> : <Moon size={20} />}
             </button>
         </div>
@@ -124,20 +136,20 @@ function App() {
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto relative">
           {/* Market Status Banner */}
-          <div className="bg-gray-200 dark:bg-[#202022] px-4 py-1 flex items-center justify-center space-x-4 text-xs font-mono text-gray-600 dark:text-gray-400 border-b border-gray-300 dark:border-gray-700">
-              <span className="flex items-center text-green-600 dark:text-green-500 font-bold">
+          <div className="bg-gray-200 dark:bg-[#202022] px-2 sm:px-4 py-1 flex items-center justify-center space-x-2 sm:space-x-4 text-[10px] sm:text-xs font-mono text-gray-600 dark:text-gray-400 border-b border-gray-300 dark:border-gray-700 flex-wrap">
+              <span className="flex items-center text-green-600 dark:text-green-500 font-bold whitespace-nowrap">
                 <Zap size={12} className="mr-1 fill-current" /> 
                 HYPER-SPEED
               </span>
-              <span className="hidden sm:inline"> | Strategy: Multi-Proxy Racing (All-Origins, CorsProxy, CodeTabs)</span>
-              <span className="opacity-50">|</span>
+              <span className="hidden sm:inline"> | Strategy: Multi-Proxy Racing</span>
+              <span className="hidden sm:inline opacity-50">|</span>
               <span className="hidden sm:inline"> Poll: 1000ms</span>
               <button 
                 onClick={() => setShowDocs(true)}
-                className="flex items-center space-x-1 ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline cursor-pointer"
+                className="flex items-center space-x-1 ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline cursor-pointer whitespace-nowrap"
               >
                  <Info size={12} />
-                 <span>Data Specs</span>
+                 <span>Specs</span>
               </button>
           </div>
 

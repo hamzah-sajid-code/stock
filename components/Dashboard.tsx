@@ -71,7 +71,7 @@ export const Dashboard: React.FC<Props> = ({
 
   return (
     <div className={clsx(
-        "p-4 min-h-screen transition-all", 
+        "p-2 sm:p-4 min-h-screen transition-all", 
         !layout.fullscreenPanelId ? `grid ${gridCols} gap-4` : "block"
     )}>
       {panels.map((panel) => {
@@ -88,7 +88,7 @@ export const Dashboard: React.FC<Props> = ({
                 onDragOver={(e) => handleDragOver(e, panel.id)}
                 className={clsx(
                     "relative",
-                    isMaximized ? "h-screen w-full" : (layout.dense ? "h-48" : "h-96")
+                    isMaximized ? "h-screen w-full" : (layout.dense ? "h-48 sm:h-56" : "h-72 sm:h-96")
                 )}
             >
                 <StockPanel 
